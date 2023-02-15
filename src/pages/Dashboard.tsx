@@ -1,8 +1,9 @@
 import React from 'react';
+import Wrapper from "../components/Wrapper";
 
 const Dashboard = () => {
   return (
-      <div>
+      <Wrapper>
           <nav aria-label="breadcrumb" className="ml-3">
               <ol className="breadcrumb pt-3">
                   <li className="breadcrumb-item active" aria-current="page">DashBoard</li>
@@ -20,7 +21,7 @@ const Dashboard = () => {
                   </div>
               </div>
           </div>
-      </div>
+      </Wrapper>
   )
 }
 
