@@ -1,7 +1,7 @@
-import {Field, Form, Formik, FormikHelpers, FormikState, FormikValues, useFormik} from "formik";
-import React, {useState} from "react";
+import {Field, Form, Formik, FormikHelpers} from "formik";
+import React from "react";
 import './Register.module.css';
-import Yup from "yup";
+import * as Yup from 'yup';
 
 interface FormData {
     username: string,
@@ -46,25 +46,37 @@ const Register = () => {
                             <h2 className="card-title text-center font-weight-bold h1">Register</h2>
                             <div className="card-body py-md-4">
                                 <Formik onSubmit={onSubmit} initialValues={initialValue} validationSchema={SignupValidation} >
-                                    {({ isSubmitting }: FormikState<FormData>) => (
+                                    {({ errors, touched  }) => (
                                     <Form>
                                         <div className="form-group">
                                             <label htmlFor="username">First Name</label>
                                             <Field id="username" className="form-control" name="username" placeholder="Enter Username" />
+                                            {errors.username && touched.username ? (
+                                                <div className="text-danger">{errors.username}</div>
+                                            ) : null}
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="email">Email</label>
                                             <Field id="email" className="form-control" name="email" placeholder="Enter Email" />
+                                            {errors.email && touched.email ? (
+                                                <div className="text-danger">{errors.email}</div>
+                                            ) : null}
                                         </div>
                                             <div className="row">
                                             <div className="form-group col">
                                                 <label htmlFor="password">Password</label>
                                                 <Field id="password" className="form-control" name="password" placeholder="Enter password" />
+                                                {errors.password && touched.password ? (
+                                                    <div className="text-danger">{errors.password}</div>
+                                                ) : null}
                                             </div>
 
                                             <div className="form-group col">
                                                 <label htmlFor="username">Confirm Password </label>
                                                 <Field id="confirmPassword" className="form-control" name="confirmPassword" placeholder="Confirm Password" />
+                                                {errors.confirmPassword && touched.confirmPassword ? (
+                                                    <div className="text-danger">{errors.confirmPassword}</div>
+                                                ) : null}
                                             </div>
                                             </div>
 
