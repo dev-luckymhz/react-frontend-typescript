@@ -16,12 +16,17 @@ export interface ProductData {
     image: string,
     price: number
 }
+
+
+export const BaseUrl = "http://localhost:8000/api"
+
 export const AxiosRequest = async (requestType = "get", body?: UserData | ProductData | null, url = UserBaseUrl) => {
-    await  axios({
+    const config : { method: string, url: string, data?: UserData | ProductData | null } = {
         method: requestType,
         url: url,
-        data: body
-    })
+    };
+    (body)? config.data = body : null
+    await  axios(config)
         .then(function (response) {
             return response
         }).catch(err => {
@@ -29,4 +34,3 @@ export const AxiosRequest = async (requestType = "get", body?: UserData | Produc
         });
 }
 
-export const BaseUrl = "http://localhost:8000/api"
