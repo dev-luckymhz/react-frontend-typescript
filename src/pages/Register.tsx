@@ -1,12 +1,13 @@
 import {Field, Form, Formik, FormikHelpers} from "formik";
-import React from "react";
+import React, {useState} from "react";
 import './Register.module.css';
 import * as Yup from 'yup';
 import {UserData} from "../services/baseData";
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import {UserRegister} from "../services/Auth.services";
 
 const Register = () => {
+    const [isRedirect, setIsRedirect] = useState(false);
     const initialValue : UserData = {
         username: '',
         password: '',
@@ -31,14 +32,14 @@ const Register = () => {
     
     const onSubmit = (values: UserData, helpers: FormikHelpers<UserData>) => {
         console.log({ values, helpers });
-        setTimeout(() => helpers.setSubmitting(false), 2000);
             UserRegister(values).then(()=>{
                 console.log(values)
+                setIsRedirect(true);
             }).catch(err=> {
                 console.log(err)
             });
     };
-
+    if(isRedirect) return (<> <Navigate replace to={'/login'}/> </>);
     return (
         <div>
             <div className="container"  >
@@ -51,7 +52,7 @@ const Register = () => {
                                     {({ errors, touched  }) => (
                                     <Form>
                                         <div className="form-group">
-                                            <label htmlFor="username">First Name</label>
+                                            <label htmlFor="username">UserName</label>
                                             <Field id="username" className="form-control" name="username" placeholder="Enter Username" />
                                             {errors.username && touched.username ? (
                                                 <div className="text-danger">{errors.username}</div>

@@ -1,11 +1,10 @@
 import axios from "axios";
-import {UserBaseUrl} from "./user.services";
 
 export interface UserData {
     id?: number,
     username: string,
     password: string,
-    email: string,
+    email?: string,
     confirmPassword?: string
 };
 
@@ -26,7 +25,7 @@ export const AxiosRequest = async (requestType = "get", body?: axiosDataModel, u
         method: requestType,
         url: url,
     };
-    if(body && true) config.data = body;
+    if(body) config.data = body;
     await  axios(config)
         .then(function (response) {
             return response

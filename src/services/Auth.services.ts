@@ -9,3 +9,8 @@ export const UserRegister = async (data: UserData) => {
     const AuthBaseUrl = `${BaseUrl}/register`
     return AxiosRequest("post", data, AuthBaseUrl)
 }
+
+export const UserLogin = async (data: UserData) => {
+    const AuthBaseUrl = `${BaseUrl}/register`
+    return AxiosRequest("post", data, AuthBaseUrl)
+}
