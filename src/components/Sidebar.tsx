@@ -15,6 +15,7 @@ const Sidebar = () => {
                               <div className="mr-3">
                                   <FontAwesomeIcon icon={faComputer}/>
                               </div>
+                              <div className="mr-3"></div>
                               <span className="hide-menu ml-3">Dashboard</span>
                           </Link>
                       </li>

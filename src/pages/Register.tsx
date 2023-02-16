@@ -4,6 +4,7 @@ import './Register.module.css';
 import * as Yup from 'yup';
 import {UserData} from "../services/baseData";
 import {Link} from "react-router-dom";
+import {UserRegister} from "../services/Auth.services";
 
 const Register = () => {
     const initialValue : UserData = {
@@ -30,7 +31,12 @@ const Register = () => {
     
     const onSubmit = (values: UserData, helpers: FormikHelpers<UserData>) => {
         console.log({ values, helpers });
-
+        setTimeout(() => helpers.setSubmitting(false), 2000);
+            UserRegister(values).then(()=>{
+                console.log(values)
+            }).catch(err=> {
+                console.log(err)
+            });
     };
 
     return (
@@ -61,7 +67,7 @@ const Register = () => {
                                             <div className="row">
                                             <div className="form-group col">
                                                 <label htmlFor="password">Password</label>
-                                                <Field id="password" className="form-control" name="password" placeholder="Enter password" />
+                                                <Field id="password" className="form-control" type={"password"} name="password" placeholder="Enter password" />
                                                 {errors.password && touched.password ? (
                                                     <div className="text-danger">{errors.password}</div>
                                                 ) : null}
@@ -69,7 +75,7 @@ const Register = () => {
 
                                             <div className="form-group col">
                                                 <label htmlFor="username">Confirm Password </label>
-                                                <Field id="confirmPassword" className="form-control" name="confirmPassword" placeholder="Confirm Password" />
+                                                <Field id="confirmPassword" type={"password"} className="form-control" name="confirmPassword" placeholder="Confirm Password" />
                                                 {errors.confirmPassword && touched.confirmPassword ? (
                                                     <div className="text-danger">{errors.confirmPassword}</div>
                                                 ) : null}

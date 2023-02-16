@@ -21,12 +21,12 @@ type axiosDataModel = UserData | ProductData | null;
 
 export const BaseUrl = "http://localhost:8000/api"
 
-export const AxiosRequest = async (requestType = "get", body?: axiosDataModel, url = UserBaseUrl) => {
+export const AxiosRequest = async (requestType = "get", body?: axiosDataModel, url = BaseUrl) => {
     const config : { method: string, url: string, data?: axiosDataModel } = {
         method: requestType,
         url: url,
     };
-    (body && true)? config.data = body : null
+    if(body && true) config.data = body;
     await  axios(config)
         .then(function (response) {
             return response

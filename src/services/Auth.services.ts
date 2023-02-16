@@ -5,7 +5,7 @@ export const Login = async (data: UserData) => {
     return AxiosRequest("post", data, AuthBaseUrl)
 }
 
-export const Register = async (data: UserData) => {
+export const UserRegister = async (data: UserData) => {
     const AuthBaseUrl = `${BaseUrl}/register`
     return AxiosRequest("post", data, AuthBaseUrl)
 }
