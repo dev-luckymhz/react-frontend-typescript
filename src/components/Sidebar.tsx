@@ -19,13 +19,13 @@ const Sidebar = () => {
                           </Link>
                       </li>
                       <li className="sidebar-item">
-                          <a
+                          <Link to={'/product'}
                               className="sidebar-link waves-effect waves-dark sidebar-link">
                               <div className="mr-3">
                                   <FontAwesomeIcon icon={faCartPlus} />
                               </div>
                               <span className="hide-menu">Product</span>
-                          </a>
+                          </Link>
                       </li>
                       <li className="sidebar-item">
                           <Link to={'/user'}

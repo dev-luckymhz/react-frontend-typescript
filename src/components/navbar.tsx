@@ -1,13 +1,14 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 const Navbar = () => {
     return (
         <header className="topbar" data-navbarbg="skin6">
             <nav className="navbar top-navbar navbar-expand-md navbar-dark">
                 <div className="navbar-header" data-logobg="skin6">
-                    <a className="navbar-brand" >
+                    <span className="navbar-brand" >
                         <span className="logo-text text-dark"><h1>M</h1></span>
-                    </a>
+                    </span>
                 </div>
 
                 <div
@@ -25,8 +26,8 @@ const Navbar = () => {
 
                     <ul className="navbar-nav">
                         <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle waves-effect waves-dark"> Markarn Doe
-                            </a>
+                            <Link to={'/user'} className="nav-link dropdown-toggle waves-effect waves-dark"> Markarn Doe
+                            </Link>
                             <ul
                                 className="dropdown-menu show"
                                 aria-labelledby="navbarDropdown"

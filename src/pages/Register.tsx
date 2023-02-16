@@ -2,15 +2,11 @@ import {Field, Form, Formik, FormikHelpers} from "formik";
 import React from "react";
 import './Register.module.css';
 import * as Yup from 'yup';
+import {UserData} from "../services/baseData";
+import {Link} from "react-router-dom";
 
-interface FormData {
-    username: string,
-    password: string,
-    email: string,
-    confirmPassword: string
-}
 const Register = () => {
-    const initialValue : FormData = {
+    const initialValue : UserData = {
         username: '',
         password: '',
         email: '',
@@ -32,9 +28,9 @@ const Register = () => {
         email: Yup.string().email('Invalid email').required('Required'),
     });
     
-    const onSubmit = (values: FormData, helpers: FormikHelpers<FormData>) => {
+    const onSubmit = (values: UserData, helpers: FormikHelpers<UserData>) => {
         console.log({ values, helpers });
-        setTimeout(() => helpers.setSubmitting(false), 2000);
+
     };
 
     return (
@@ -81,7 +77,7 @@ const Register = () => {
                                             </div>
 
                                         <div className="d-flex flex-row align-items-center justify-content-between">
-                                            <a href="#">Login</a>
+                                            <Link to={'/login'}>Login</Link>
                                             <button className="btn btn-primary" type={"submit"}>Create Account</button>
                                         </div>
                                     </Form> )}

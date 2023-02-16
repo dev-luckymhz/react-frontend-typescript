@@ -7,7 +7,7 @@ export interface UserData {
     password: string,
     email: string,
     confirmPassword?: string
-}
+};
 
 export interface ProductData {
     id?: number,
@@ -15,17 +15,18 @@ export interface ProductData {
     description: string,
     image: string,
     price: number
-}
+};
 
+type axiosDataModel = UserData | ProductData | null;
 
 export const BaseUrl = "http://localhost:8000/api"
 
-export const AxiosRequest = async (requestType = "get", body?: UserData | ProductData | null, url = UserBaseUrl) => {
-    const config : { method: string, url: string, data?: UserData | ProductData | null } = {
+export const AxiosRequest = async (requestType = "get", body?: axiosDataModel, url = UserBaseUrl) => {
+    const config : { method: string, url: string, data?: axiosDataModel } = {
         method: requestType,
         url: url,
     };
-    (body)? config.data = body : null
+    (body && true)? config.data = body : null
     await  axios(config)
         .then(function (response) {
             return response
