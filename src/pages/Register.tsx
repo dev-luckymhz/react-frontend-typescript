@@ -1,4 +1,4 @@
-import {Field, Form, Formik } from "formik";
+import {Field, Form, Formik, FormikHelpers, FormikState, FormikValues, useFormik} from "formik";
 import React, {useState} from "react";
 import './Register.module.css';
 
@@ -15,29 +15,41 @@ const Register = () => {
         email: '',
         confirmPassword: ''
     }
+    const validate = (values: FormData) => {
+        const errors : FormData= {
+            username: '',
+            password: '',
+            email: '',
+            confirmPassword: ''}
+
+        if (!values.email) {
+            errors.email = 'Required'
+        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+            errors.email = 'Invalid email address'
+        }
+        return errors
+    }
+    
+    const onSubmit = (values: FormData, helpers: FormikHelpers<FormData>) => {
+        console.log({ values, helpers });
+        setTimeout(() => helpers.setSubmitting(false), 2000);
+    };
 
     return (
         <div>
             <div className="container"  >
                 <div className="row justify-content-center text-center">
                     <div className="col-md-5">
-                        <div className="card">
-                            <h2 className="card-title text-center h1">Register</h2>
+                        <div className="card bg-light mt-5">
+                            <h2 className="card-title text-center font-weight-bold h1">Register</h2>
                             <div className="card-body py-md-4">
-                                <Formik
-                                    initialValues={inintialValue}
-                                    onSubmit={(values, actions) => {
-                                        console.log({ values, actions });
-                                        alert(JSON.stringify(values, null, 2));
-                                        actions.setSubmitting(false);
-                                    }}
-                                >
+                                <Formik onSubmit={onSubmit} initialValues={inintialValue} >
+                                    {({ isSubmitting }: FormikState<FormData>) => (
                                     <Form>
                                         <div className="form-group">
                                             <label htmlFor="username">First Name</label>
                                             <Field id="username" className="form-control" name="username" placeholder="Enter Username" />
                                         </div>
-
                                         <div className="form-group">
                                             <label htmlFor="email">Email</label>
                                             <Field id="email" className="form-control" name="email" placeholder="Enter Email" />
@@ -58,7 +70,7 @@ const Register = () => {
                                             <a href="#">Login</a>
                                             <button className="btn btn-primary" type={"submit"}>Create Account</button>
                                         </div>
-                                    </Form>
+                                    </Form> )}
                                 </Formik>
                             </div>
                         </div>
