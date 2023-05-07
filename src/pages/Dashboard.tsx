@@ -4,7 +4,7 @@ import Wrapper from "../components/Wrapper";
 const Dashboard = () => {
   return (
       <Wrapper>
-          <nav aria-label="breadcrumb" className="ml-3">
+          <nav aria-label="breadcrumb" className="mx-3">
               <ol className="breadcrumb pt-3">
                   <li className="breadcrumb-item active" aria-current="page">DashBoard</li>
               </ol>

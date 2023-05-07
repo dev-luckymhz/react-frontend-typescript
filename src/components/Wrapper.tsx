@@ -19,8 +19,12 @@ const Wrapper = (props : Props) => {
         <Navbar />
         <Sidebar />
         <div className="page-wrapper">
+          <div className="page-body">
           {props.children}
+          </div>
+          <div className="page-footer">
           <Footer />
+          </div>
         </div>
       </div>
   )

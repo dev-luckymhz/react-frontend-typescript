@@ -12,7 +12,7 @@ const Sidebar = () => {
                       <li className="sidebar-item">
                           <Link to={'/'}
                               className="sidebar-link waves-effect waves-dark sidebar-link">
-                              <div className="mr-3">
+                              <div className="mx-3">
                                   <FontAwesomeIcon icon={faComputer}/>
                               </div>
                               <div className="mr-3"></div>
@@ -22,7 +22,7 @@ const Sidebar = () => {
                       <li className="sidebar-item">
                           <Link to={'/product'}
                               className="sidebar-link waves-effect waves-dark sidebar-link">
-                              <div className="mr-3">
+                              <div className="mx-3">
                                   <FontAwesomeIcon icon={faCartPlus} />
                               </div>
                               <span className="hide-menu">Product</span>
@@ -31,7 +31,7 @@ const Sidebar = () => {
                       <li className="sidebar-item">
                           <Link to={'/user'}
                               className="sidebar-link waves-effect waves-dark sidebar-link">
-                              <div className="mr-3">
+                              <div className="mx-3">
                                   <FontAwesomeIcon icon={faUserAlt} />
                               </div>
                               <span className="hide-menu">Users</span>
