@@ -19,7 +19,7 @@ type tCredential = {withCredentials: boolean}
 
 type axiosDataModel = UserData | ProductData | null;
 
-export const BaseUrl = "http://localhost:8000/api"
+export const BaseUrl = ""
 
 export const AxiosRequest = async (requestType = "get", body?: axiosDataModel, url = BaseUrl, credential = false ) => {
     const config : { method: string, url: string, data?: axiosDataModel, withCredentials?: boolean } = {
