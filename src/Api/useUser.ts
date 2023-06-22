@@ -37,7 +37,8 @@ export default function useUser() {
     const fetchAllUsers = async () => {
         try {
             const response = await GetUsers();
-            setUsers(response.data);
+            setUsers(response.data.data);
+            console.log(users)
         } catch (error) {
             throw error;
         }
@@ -76,14 +77,9 @@ export default function useUser() {
      * @param userId - The ID of the user to delete.
      * @throws Error if the deletion fails or an error occurs during the request.
      */
-    const deleteUser = async (userId: number) => {
-        const data: UserData = {
-            id: userId,
-            username: "",
-            password: "",
-        };
+    const deleteUser = async (userData: UserData) => {
         try {
-            await DeleteUser(data);
+            await DeleteUser(userData);
             setUser(null);
         } catch (error) {
             throw error;

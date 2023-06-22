@@ -80,9 +80,10 @@ export default function useProduct() {
     const deleteProduct = async (productId: number) => {
         const data: ProductData = {
             id: productId,
-            name: "",
+            title: "",
             price: 0,
             description: "",
+            image: ""
         };
         try {
             await DeleteProduct(data);

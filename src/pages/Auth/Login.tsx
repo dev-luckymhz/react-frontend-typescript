@@ -58,7 +58,7 @@ const Login = () => {
                                             </div>
 
                                             <div className="d-flex flex-row align-items-center justify-content-between">
-                                                <p> vous n'avez de compte,                                         
+                                                <p> Don't have an account,
                                                 <Link to={'/register'} className='text-danger'> Register</Link>
                                                 </p>
                                                 <button className="btn btn-primary" type={"submit"}>Login</button>

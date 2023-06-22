@@ -1,17 +1,39 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Wrapper from "../../components/Wrapper";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faPlus, faTrash, faPencil } from "@fortawesome/free-solid-svg-icons";
 import useUser from "../../Api/useUser";
-import { UserData } from "../../services/baseData";
+import {UserData} from "../../services/baseData";
 
 const Users = () => {
-    const { users, fetchAllUsers } = useUser();
+    const { users, fetchAllUsers, deleteUser } = useUser();
+    const [error, setError] = useState<Error | null>(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetchAllUsers();
+        fetchData();
     }, []);
+
+    const fetchData = async () => {
+        try {
+            await fetchAllUsers();
+            setLoading(false);
+        } catch (error) {
+            setError(error as Error);
+            setLoading(false);
+        }
+    };
+
+    const handleDeleteUser = async (userData : UserData) => {
+        try {
+            await deleteUser(userData);
+            // Refetch users after successful deletion
+            fetchData();
+        } catch (error) {
+            setError(error as Error);
+        }
+    };
 
     return (
         <Wrapper>
@@ -29,12 +51,16 @@ const Users = () => {
                         <div className="card">
                             <div className="card-title mt-2 mx-3">
                                 <h5 className="float-left">List des Utilisateurs</h5>
-                                <Link to="/newp" className="btn btn-success float-right">
+                                <Link to="/new-user" className="btn btn-success float-right">
                                     Nouveaux <FontAwesomeIcon icon={faPlus} />
                                 </Link>
                             </div>
                             <div className="card-body">
-                                {users.length > 0 ? (
+                                {loading ? (
+                                    <div className="alert alert-info">Loading users...</div>
+                                ) : error ? (
+                                    <div className="alert alert-danger">Error: {error.message}</div>
+                                ) : users.length > 0 ? (
                                     <table className="table table-striped">
                                         <thead className="thead-dark">
                                         <tr>
@@ -61,11 +87,16 @@ const Users = () => {
                                                         to="/edit"
                                                         className="text-warning rounded-circle mx-1"
                                                     >
-                                                        <FontAwesomeIcon icon={faPlus} />
+                                                        <FontAwesomeIcon icon={faPencil} />
                                                     </Link>
-                                                    <button className="text-danger border-0 rounded-circle mx-1">
-                                                        <FontAwesomeIcon icon={faTrash} />
-                                                    </button>
+                                                    {userData.id && (
+                                                        <button
+                                                            className="text-danger border-0 rounded-circle mx-1"
+                                                            onClick={() => handleDeleteUser(userData)}
+                                                        >
+                                                            <FontAwesomeIcon icon={faTrash} />
+                                                        </button>
+                                                    )}
                                                 </td>
                                             </tr>
                                         ))}

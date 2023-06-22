@@ -37,7 +37,7 @@ const NewUser = () => {
         values: UserData,
         helpers: FormikHelpers<UserData>
     ) => {
-        
+
         setIsRedirect(true);
     };
 
@@ -79,34 +79,36 @@ const NewUser = () => {
                                                         >
                                                             {({ errors, touched }) => (
                                                                 <>
-                                                                    <div className="form-group">
-                                                                        <label htmlFor="name">Name</label>
-                                                                        <Field
-                                                                            id="name"
-                                                                            className="form-control rounded"
-                                                                            name="username"
-                                                                            placeholder="Enter Name"
-                                                                        />
-                                                                        {errors.username && touched.username && (
-                                                                            <div className="text-danger">
-                                                                                {errors.username}
-                                                                            </div>
-                                                                        )}
-                                                                    </div>
-                                                                    <div className="form-group">
-                                                                        <label htmlFor="email">Email</label>
-                                                                        <Field
-                                                                            id="email"
-                                                                            type="email"
-                                                                            className="form-control rounded"
-                                                                            name="email"
-                                                                            placeholder="Enter Email"
-                                                                        />
-                                                                        {errors.email && touched.email && (
-                                                                            <div className="text-danger">
-                                                                                {errors.email}
-                                                                            </div>
-                                                                        )}
+                                                                    <div className="row">
+                                                                        <div className="form-group col">
+                                                                            <label htmlFor="name">Name</label>
+                                                                            <Field
+                                                                                id="name"
+                                                                                className="form-control rounded"
+                                                                                name="username"
+                                                                                placeholder="Enter Name"
+                                                                            />
+                                                                            {errors.username && touched.username && (
+                                                                                <div className="text-danger">
+                                                                                    {errors.username}
+                                                                                </div>
+                                                                            )}
+                                                                        </div>
+                                                                        <div className="form-group col">
+                                                                            <label htmlFor="email">Email</label>
+                                                                            <Field
+                                                                                id="email"
+                                                                                type="email"
+                                                                                className="form-control rounded"
+                                                                                name="email"
+                                                                                placeholder="Enter Email"
+                                                                            />
+                                                                            {errors.email && touched.email && (
+                                                                                <div className="text-danger">
+                                                                                    {errors.email}
+                                                                                </div>
+                                                                            )}
+                                                                        </div>
                                                                     </div>
                                                                     <div className="form-group">
                                                                         <label htmlFor="password">Password</label>
@@ -124,14 +126,14 @@ const NewUser = () => {
                                                                         )}
                                                                     </div>
                                                                     <div className="d-flex flex-row align-items-center justify-content-between">
-                                                                        <Link to={"/users"} className="text-danger">
+                                                                        <Link to={"/user"} className="text-danger">
                                                                             Users
                                                                         </Link>
                                                                         <button
                                                                             className="btn btn-primary"
                                                                             type="submit"
                                                                         >
-                                                                            Register
+                                                                            Save
                                                                         </button>
                                                                     </div>
                                                                 </>

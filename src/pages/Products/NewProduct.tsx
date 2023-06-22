@@ -75,7 +75,7 @@ const NewProduct = () => {
                         <div className="col-md-10">
                           <div className="card bg-light mt-5">
                             <h2 className="card-title text-center font-weight-bold h1">
-                              Ajouter un nouveau produit
+                              Add new product
                             </h2>
                             <div className="card-body py-md-4">
                               <Formik
@@ -86,12 +86,12 @@ const NewProduct = () => {
                                 {({ errors, touched }) => (
                                     <>
                                       <div className="form-group">
-                                        <label htmlFor="title">Titre Produit</label>
+                                        <label htmlFor="title">Title Product</label>
                                         <Field
                                             id="title"
                                             className="form-control rounded"
                                             name="title"
-                                            placeholder="Entrer Nom Produit"
+                                            placeholder="Enter Product name"
                                         />
                                         {errors.title && touched.title && (
                                             <div className="text-danger">
@@ -108,7 +108,7 @@ const NewProduct = () => {
                                             type="textarea"
                                             className="form-control rounded"
                                             name="description"
-                                            placeholder="Entrer description Email"
+                                            placeholder="Enter product description"
                                         />
                                         {errors.description && touched.description && (
                                             <div className="text-danger">
@@ -133,13 +133,13 @@ const NewProduct = () => {
                                           )}
                                         </div>
                                         <div className="form-group col">
-                                          <label htmlFor="price">Prix</label>
+                                          <label htmlFor="price">Price</label>
                                           <Field
                                               id="price"
                                               type="number"
                                               className="form-control rounded"
                                               name="price"
-                                              placeholder="Entrer Prix"
+                                              placeholder="Enter Price"
                                           />
                                           {errors.price && touched.price && (
                                               <div className="text-danger">
@@ -150,13 +150,13 @@ const NewProduct = () => {
                                       </div>
                                       <div className="d-flex flex-row align-items-center justify-content-between">
                                         <Link to={"/product"} className="text-danger">
-                                          Produits
+                                          Products
                                         </Link>
                                         <button
                                             className="btn btn-primary"
                                             type="submit"
                                         >
-                                          Enregistrer
+                                          Save
                                         </button>
                                       </div>
                                     </>
