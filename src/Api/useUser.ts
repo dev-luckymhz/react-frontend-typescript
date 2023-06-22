@@ -1,8 +1,12 @@
 import { useState } from "react";
-import {UserData} from "../services/baseData";
-import {DeleteUser, GetOneUser, RegisterUser, UpdateUser} from "../services/user.services";
-
-
+import { UserData } from "../services/baseData";
+import {
+    DeleteUser,
+    GetOneUser,
+    RegisterUser,
+    UpdateUser,
+    GetUsers,
+} from "../services/user.services";
 
 /**
  * Custom hook for managing user-related functionality.
@@ -11,6 +15,7 @@ import {DeleteUser, GetOneUser, RegisterUser, UpdateUser} from "../services/user
  */
 export default function useUser() {
     const [user, setUser] = useState<UserData | null>(null);
+    const [users, setUsers] = useState<UserData[]>([]);
 
     /**
      * Fetches the user data from the server and updates the state.
@@ -20,6 +25,19 @@ export default function useUser() {
         try {
             const response = await GetOneUser(user?.id || 0);
             setUser(response.data);
+        } catch (error) {
+            throw error;
+        }
+    };
+
+    /**
+     * Fetches all users from the server and updates the state.
+     * @throws Error if an error occurs during the request.
+     */
+    const fetchAllUsers = async () => {
+        try {
+            const response = await GetUsers();
+            setUsers(response.data);
         } catch (error) {
             throw error;
         }
@@ -59,11 +77,11 @@ export default function useUser() {
      * @throws Error if the deletion fails or an error occurs during the request.
      */
     const deleteUser = async (userId: number) => {
-        const data : UserData = {
+        const data: UserData = {
             id: userId,
             username: "",
-            password: ""
-        }
+            password: "",
+        };
         try {
             await DeleteUser(data);
             setUser(null);
@@ -74,7 +92,9 @@ export default function useUser() {
 
     return {
         user,
+        users,
         fetchUser,
+        fetchAllUsers,
         createUser,
         updateUser,
         deleteUser,
