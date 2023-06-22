@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
-import {BaseUrl, UserData} from "../services/baseData";
+import {UserData} from "../../services/baseData";
 import * as Yup from "yup";
 import {Field, Form, Formik, FormikHelpers} from "formik";
-// import {UserLogin} from "../services/Auth.services";
 import {Link, Navigate} from "react-router-dom";
 import axios from "axios";
 
@@ -22,7 +21,7 @@ const Login = () => {
 
     const onSubmit = async (values: UserData, helpers: FormikHelpers<UserData>) => {
         const { username, password } = values;
-        await axios.post(`${BaseUrl}/login`, { username, password },{withCredentials: true}).then(
+        await axios.post(`/login`, { username, password },{withCredentials: true}).then(
             response => {
                 console.log(response)
                 return response
@@ -36,7 +35,7 @@ const Login = () => {
         <div>
             <div className="container"  >
                 <div className="row justify-content-center text-center">
-                    <div className="col-md-5">
+                    <div className="col-md-10">
                         <div className="card bg-light mt-5">
                             <h2 className="card-title text-center font-weight-bold h1">Login</h2>
                             <div className="card-body py-md-4">
@@ -59,7 +58,9 @@ const Login = () => {
                                             </div>
 
                                             <div className="d-flex flex-row align-items-center justify-content-between">
-                                                <Link to={'/register'}>Register</Link>
+                                                <p> vous n'avez de compte,                                         
+                                                <Link to={'/register'} className='text-danger'> Register</Link>
+                                                </p>
                                                 <button className="btn btn-primary" type={"submit"}>Login</button>
                                             </div>
                                         </Form> )}

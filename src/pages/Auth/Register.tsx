@@ -2,9 +2,9 @@ import {Field, Form, Formik, FormikHelpers} from "formik";
 import React, {useState} from "react";
 import './Register.module.css';
 import * as Yup from 'yup';
-import {UserData} from "../services/baseData";
+import {UserData} from "../../services/baseData";
 import {Link, Navigate} from "react-router-dom";
-import {UserRegister} from "../services/Auth.services";
+import {UserRegister} from "../../services/Auth.services";
 
 const Register = () => {
     const [isRedirect, setIsRedirect] = useState(false);
@@ -44,7 +44,7 @@ const Register = () => {
         <div>
             <div className="container"  >
                 <div className="row justify-content-center text-center">
-                    <div className="col-md-5">
+                    <div className="col-md-10">
                         <div className="card bg-light mt-5">
                             <h2 className="card-title text-center font-weight-bold h1">Register</h2>
                             <div className="card-body py-md-4">
@@ -53,14 +53,14 @@ const Register = () => {
                                     <Form>
                                         <div className="form-group">
                                             <label htmlFor="username">UserName</label>
-                                            <Field id="username" className="form-control" name="username" placeholder="Enter Username" />
+                                            <Field id="username" className="form-control rounded" name="username" placeholder="Enter Username" />
                                             {errors.username && touched.username ? (
                                                 <div className="text-danger">{errors.username}</div>
                                             ) : null}
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="email">Email</label>
-                                            <Field id="email" className="form-control" name="email" placeholder="Enter Email" />
+                                            <Field id="email" className="form-control rounded" name="email" placeholder="Enter Email" />
                                             {errors.email && touched.email ? (
                                                 <div className="text-danger">{errors.email}</div>
                                             ) : null}
@@ -68,7 +68,7 @@ const Register = () => {
                                             <div className="row">
                                             <div className="form-group col">
                                                 <label htmlFor="password">Password</label>
-                                                <Field id="password" className="form-control" type={"password"} name="password" placeholder="Enter password" />
+                                                <Field id="password" className="form-control rounded" type={"password"} name="password" placeholder="Enter password" />
                                                 {errors.password && touched.password ? (
                                                     <div className="text-danger">{errors.password}</div>
                                                 ) : null}
@@ -76,7 +76,7 @@ const Register = () => {
 
                                             <div className="form-group col">
                                                 <label htmlFor="username">Confirm Password </label>
-                                                <Field id="confirmPassword" type={"password"} className="form-control" name="confirmPassword" placeholder="Confirm Password" />
+                                                <Field id="confirmPassword" type={"password"} className="form-control rounded" name="confirmPassword" placeholder="Confirm Password" />
                                                 {errors.confirmPassword && touched.confirmPassword ? (
                                                     <div className="text-danger">{errors.confirmPassword}</div>
                                                 ) : null}
@@ -84,7 +84,7 @@ const Register = () => {
                                             </div>
 
                                         <div className="d-flex flex-row align-items-center justify-content-between">
-                                            <Link to={'/login'}>Login</Link>
+                                            <Link to={'/login'} className="text-danger">Login</Link>
                                             <button className="btn btn-primary" type={"submit"}>Create Account</button>
                                         </div>
                                     </Form> )}

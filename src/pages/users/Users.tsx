@@ -1,16 +1,16 @@
 import React from "react";
-import Wrapper from "../components/Wrapper";
+import Wrapper from "../../components/Wrapper";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-const Product = () => {
+const Users = () => {
   return (
     <Wrapper>
       <nav aria-label="breadcrumb" className="mx-3">
         <ol className="breadcrumb pt-3">
           <li className="breadcrumb-item active" aria-current="page">
-            Product
+            Utilisateur
           </li>
         </ol>
       </nav>
@@ -20,16 +20,16 @@ const Product = () => {
           <div className="col-12">
             <div className="card">
                 <div className="card-title mt-2 mx-3">
-                <h5 className=" float-left">List des Produit</h5>
-                <Link to="/" className="btn btn-success float-right"> Nouveaux</Link>
+                <h5 className="float-left">List des Utilisateurs</h5>
+                <Link to="/newp" className="btn btn-success float-right"> Nouveaux <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon></Link>
                 </div>
               <div className="card-body">
                 <table className="table table-striped">
                   <thead className="thead-dark">
                     <tr>
                       <th scope="col">#</th>
-                      <th scope="col">First</th>
-                      <th scope="col">Last</th>
+                      <th scope="col">Product Name</th>
+                      <th scope="col">Price</th>
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>
@@ -39,9 +39,9 @@ const Product = () => {
                       <td>Mark</td>
                       <td>Otto</td>
                         <td>
-                            <Link to="/edit" className="btn btn-outline-success rounded-circle mx-1"> <FontAwesomeIcon icon={faEye}></FontAwesomeIcon> </Link>
-                            <Link to="/edit" className="btn btn-outline-warning rounded-circle mx-1"> <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon> </Link>
-                            <button className="btn btn-outline-danger rounded-circle mx-1"> <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon> </button>
+                            <Link to="/view" className="text-success rounded-circle mx-1"> <FontAwesomeIcon icon={faEye}></FontAwesomeIcon> </Link>
+                            <Link to="/edit" className="text-warning rounded-circle mx-1"> <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon> </Link>
+                            <button className="text-danger border-0 rounded-circle mx-1"> <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon> </button>
                         </td>
                     </tr>
                   </tbody>
@@ -55,4 +55,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default Users;
