@@ -1,8 +1,8 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { UserData, BaseUrl } from './baseData';
+import { UserData } from './baseData';
 import {handleAxiosError} from "./errorHanddling.services";
 
-const UserBaseUrl = `${BaseUrl}/users`;
+const UserBaseUrl = `/users`;
 
 /**
  * Registers a new user.
@@ -13,7 +13,7 @@ const UserBaseUrl = `${BaseUrl}/users`;
  */
 export const RegisterUser = async (data: UserData): Promise<AxiosResponse> => {
     try {
-        const response = await axios.post(UserBaseUrl, data, { withCredentials: true });
+        const response = await axios.post(UserBaseUrl, data);
         return response;
     } catch (error) {
         handleAxiosError(error as AxiosError);
@@ -33,7 +33,7 @@ export const UpdateUser = async (data: UserData): Promise<AxiosResponse> => {
     const url = `${UserBaseUrl}/${userId}`;
 
     try {
-        const response = await axios.put(url, data, { withCredentials: true });
+        const response = await axios.put(url, data);
         return response;
     } catch (error) {
         handleAxiosError(error as AxiosError);
@@ -53,7 +53,7 @@ export const DeleteUser = async (data: UserData): Promise<AxiosResponse> => {
     const url = `${UserBaseUrl}/${userId}`;
 
     try {
-        const response = await axios.delete(url, { withCredentials: true });
+        const response = await axios.delete(url);
         return response;
     } catch (error) {
         handleAxiosError(error as AxiosError);
@@ -69,7 +69,7 @@ export const DeleteUser = async (data: UserData): Promise<AxiosResponse> => {
  */
 export const GetUsers = async (): Promise<AxiosResponse> => {
     try {
-        const response = await axios.get(UserBaseUrl, { withCredentials: true });
+        const response = await axios.get(UserBaseUrl);
         return response;
     } catch (error) {
         handleAxiosError(error as AxiosError);
@@ -88,7 +88,7 @@ export const GetOneUser = async (id: number): Promise<AxiosResponse> => {
     const url = `${UserBaseUrl}/${id}`;
 
     try {
-        const response = await axios.get(url, { withCredentials: true });
+        const response = await axios.get(url);
         return response;
     } catch (error) {
         handleAxiosError(error as AxiosError);

@@ -2,7 +2,6 @@ import { UserData, BaseUrl } from "./baseData";
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import {handleAxiosError} from "./errorHanddling.services";
 
-const AuthBaseUrl = `${BaseUrl}/auth`;
 
 /**
  * User registration function.
@@ -13,7 +12,7 @@ const AuthBaseUrl = `${BaseUrl}/auth`;
  */
 export const UserRegister = async (data: UserData): Promise<AxiosResponse> => {
     try {
-        const response = await axios.post(AuthBaseUrl + '/register', data);
+        const response = await axios.post(  '/register', data);
         return response;
     } catch (error) {
         handleAxiosError(error as AxiosError);
@@ -30,7 +29,24 @@ export const UserRegister = async (data: UserData): Promise<AxiosResponse> => {
  */
 export const UserLogin = async (data: UserData): Promise<AxiosResponse> => {
     try {
-        const response = await axios.post(AuthBaseUrl + '/login', data);
+        const response = await axios.post( '/login', data);
+        return response;
+    } catch (error) {
+        handleAxiosError(error as AxiosError);
+        throw error;
+    }
+};
+
+
+/**
+ * Get user information.
+ *
+ * @returns Promise that resolves to the Axios response.
+ * @throws Error if getting user information fails or an error occurs during the request.
+ */
+export const getUser = async (): Promise<AxiosResponse> => {
+    try {
+        const response = await axios.get( '/user');
         return response;
     } catch (error) {
         handleAxiosError(error as AxiosError);

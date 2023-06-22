@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import Wrapper from "../../components/Wrapper";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faPlus, faPencil,faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faPlus, faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import useProduct from "../../Api/useProduct";
+import {ProductData} from "../../services/baseData";
 
 const Product = () => {
-    const { products, fetchAllProducts } = useProduct();
+    const { products, fetchAllProducts, deleteProduct } = useProduct();
     const [error, setError] = useState<Error | null>(null);
     const [loading, setLoading] = useState(true);
 
@@ -21,6 +22,20 @@ const Product = () => {
         } catch (error) {
             setError(error as Error);
             setLoading(false);
+        }
+    };
+
+    const handleDelete = async (product: ProductData) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this product?");
+        if (confirmDelete) {
+            try {
+                await deleteProduct(product);
+                // Refresh the product list after successful deletion
+                await fetchAllProducts();
+            } catch (error) {
+                console.error("Failed to delete product", error);
+                setError(error as Error);
+            }
         }
     };
 
@@ -66,19 +81,16 @@ const Product = () => {
                                                 <td>{productData.title}</td>
                                                 <td>{productData.price}</td>
                                                 <td>
-                                                    <Link
-                                                        to="/view"
-                                                        className="text-success rounded-circle mx-1"
-                                                    >
+                                                    <Link to="/view" className="text-success rounded-circle mx-1">
                                                         <FontAwesomeIcon icon={faEye} />
                                                     </Link>
-                                                    <Link
-                                                        to="/edit"
-                                                        className="text-warning rounded-circle mx-1"
-                                                    >
+                                                    <Link to={`/product/${productData.id}/edit`} key={productData.id}>
                                                         <FontAwesomeIcon icon={faPencil} />
                                                     </Link>
-                                                    <button className="text-danger border-0 rounded-circle mx-1">
+                                                    <button
+                                                        className="text-danger border-0 rounded-circle mx-1"
+                                                        onClick={() => handleDelete(productData)}
+                                                    >
                                                         <FontAwesomeIcon icon={faTrash} />
                                                     </button>
                                                 </td>

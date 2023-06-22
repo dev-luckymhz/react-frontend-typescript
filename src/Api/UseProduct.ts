@@ -77,16 +77,9 @@ export default function useProduct() {
      * @param productId - The ID of the product to delete.
      * @throws Error if the deletion fails or an error occurs during the request.
      */
-    const deleteProduct = async (productId: number) => {
-        const data: ProductData = {
-            id: productId,
-            title: "",
-            price: 0,
-            description: "",
-            image: ""
-        };
+    const deleteProduct = async (product: ProductData) => {
         try {
-            await DeleteProduct(data);
+            await DeleteProduct(product);
             setProduct(null);
         } catch (error) {
             throw error;

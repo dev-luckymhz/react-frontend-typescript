@@ -3,57 +3,56 @@ import { Link, Navigate } from "react-router-dom";
 import { Field, Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import Wrapper from "../../components/Wrapper";
-import { ProductData } from "../../services/baseData"
+import { ProductData } from "../../services/baseData";
+import useProduct from "../../Api/useProduct";
 
 /**
  * Component for creating a new product.
  */
 const NewProduct = () => {
   const [isRedirect, setIsRedirect] = useState(false);
+  const { createProduct } = useProduct();
+  const [error, setError] = useState<string | null>(null);
 
-  const initialValue: ProductData = {
+  const initialValues: ProductData = {
     title: "",
     description: "",
     image: "",
     price: 0,
   };
 
-  const ProductValidation = Yup.object().shape({
-    title: Yup.string()
-        .min(2, "Too Short!")
-        .max(50, "Too Long!")
-        .required("Required"),
+  const validationSchema = Yup.object({
+    title: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
     image: Yup.mixed<FileList>()
-        .test(
-            "fileSize",
-            "Only documents up to 2MB are permitted.",
-            (files) =>
-                !files || files.length === 0 ||
-                Array.from(files).every((file) => file.size <= 2_000_000)
-        ),
-    price: Yup.string().email("Invalid email").required("Required"),
+        .test("fileSize", "Only documents up to 2MB are permitted.", (files) => {
+          if (!files || files.length === 0) return true;
+          return Array.from(files).every((file) => file.size <= 2000000);
+        }),
+    price: Yup.number().required("Price Required"),
   });
 
   /**
    * Handles the form submission.
    *
    * @param values - Form field values.
-   * @param helpers - Formik helpers.
+   * @param formikHelpers - Formik helpers.
    */
-  const onSubmit = (
+  const onSubmit = async (
       values: ProductData,
-      helpers: FormikHelpers<ProductData>
+      { setSubmitting, resetForm }: FormikHelpers<ProductData>
   ) => {
-    setIsRedirect(true);
+    try {
+      await createProduct(values);
+      setIsRedirect(true);
+    } catch (error) {
+      console.error("Failed to create product", error);
+      setError("Failed to create product. Please try again later.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
-  if (isRedirect) {
-    return (
-        <>
-          <Navigate replace to={"/product"} />
-        </>
-    );
-  }
+  if (isRedirect) return <Navigate replace to="/product" />;
 
   return (
       <Wrapper>
@@ -69,100 +68,94 @@ const NewProduct = () => {
             <div className="col-12">
               <div className="card">
                 <div className="card-body">
-                  <div>
-                    <div className="container">
-                      <div className="row justify-content-center text-center">
-                        <div className="col-md-10">
-                          <div className="card bg-light mt-5">
-                            <h2 className="card-title text-center font-weight-bold h1">
-                              Add new product
-                            </h2>
-                            <div className="card-body py-md-4">
-                              <Formik
-                                  onSubmit={onSubmit}
-                                  initialValues={initialValue}
-                                  validationSchema={ProductValidation}
-                              >
-                                {({ errors, touched }) => (
-                                    <>
-                                      <div className="form-group">
-                                        <label htmlFor="title">Title Product</label>
+                  <div className="container">
+                    <div className="row justify-content-center text-center">
+                      <div className="col-md-10">
+                        <div className="card bg-light mt-5">
+                          <h2 className="card-title text-center font-weight-bold h1">
+                            Add new product
+                          </h2>
+                          <div className="card-body py-md-4">
+                            {error && (
+                                <div className="alert alert-danger" role="alert">
+                                  {error}
+                                </div>
+                            )}
+                            <Formik
+                                initialValues={initialValues}
+                                validationSchema={validationSchema}
+                                onSubmit={onSubmit}
+                            >
+                              {({ errors, touched, isSubmitting, handleSubmit }) => (
+                                  <form onSubmit={handleSubmit}>
+                                    <div className="form-group">
+                                      <label htmlFor="title">Title Product</label>
+                                      <Field
+                                          id="title"
+                                          className="form-control rounded"
+                                          name="title"
+                                          placeholder="Enter Product name"
+                                      />
+                                      {errors.title && touched.title && (
+                                          <div className="text-danger">{errors.title}</div>
+                                      )}
+                                    </div>
+                                    <div className="form-group">
+                                      <label htmlFor="description">Description</label>
+                                      <Field
+                                          id="description"
+                                          as="textarea"
+                                          className="form-control rounded"
+                                          name="description"
+                                          placeholder="Enter product description"
+                                      />
+                                      {errors.description && touched.description && (
+                                          <div className="text-danger">{errors.description}</div>
+                                      )}
+                                    </div>
+                                    <div className="row">
+                                      <div className="form-group col">
+                                        <label htmlFor="image">Photo</label>
                                         <Field
-                                            id="title"
+                                            id="image"
                                             className="form-control rounded"
-                                            name="title"
-                                            placeholder="Enter Product name"
+                                            type="file"
+                                            name="image"
+                                            accept="image/png, image/jpeg"
                                         />
-                                        {errors.title && touched.title && (
-                                            <div className="text-danger">
-                                              {errors.title}
-                                            </div>
+                                        {errors.image && touched.image && (
+                                            <div className="text-danger">{errors.image}</div>
                                         )}
                                       </div>
-                                      <div className="form-group">
-                                        <label htmlFor="description">
-                                          Description
-                                        </label>
+                                      <div className="form-group col">
+                                        <label htmlFor="price">Price</label>
                                         <Field
-                                            id="description"
-                                            type="textarea"
+                                            id="price"
+                                            type="number"
                                             className="form-control rounded"
-                                            name="description"
-                                            placeholder="Enter product description"
+                                            name="price"
+                                            placeholder="Enter Price"
                                         />
-                                        {errors.description && touched.description && (
-                                            <div className="text-danger">
-                                              {errors.description}
-                                            </div>
+                                        {errors.price && touched.price && (
+                                            <div className="text-danger">{errors.price}</div>
                                         )}
                                       </div>
-                                      <div className="row">
-                                        <div className="form-group col">
-                                          <label htmlFor="image">Photo</label>
-                                          <Field
-                                              id="image"
-                                              className="form-control rounded"
-                                              type="file"
-                                              name="image"
-                                              accept="image/png, image/jpeg"
-                                          />
-                                          {errors.image && touched.image && (
-                                              <div className="text-danger">
-                                                {errors.image}
-                                              </div>
-                                          )}
-                                        </div>
-                                        <div className="form-group col">
-                                          <label htmlFor="price">Price</label>
-                                          <Field
-                                              id="price"
-                                              type="number"
-                                              className="form-control rounded"
-                                              name="price"
-                                              placeholder="Enter Price"
-                                          />
-                                          {errors.price && touched.price && (
-                                              <div className="text-danger">
-                                                {errors.price}
-                                              </div>
-                                          )}
-                                        </div>
-                                      </div>
-                                      <div className="d-flex flex-row align-items-center justify-content-between">
-                                        <Link to={"/product"} className="text-danger">
-                                          Products
-                                        </Link>
-                                        <button
-                                            className="btn btn-primary"
-                                            type="submit"
-                                        >
-                                          Save
-                                        </button>
-                                      </div>
-                                    </>
-                                )}
-                              </Formik>
-                            </div>
+                                    </div>
+                                    <div className="d-flex flex-row align-items-center justify-content-between">
+                                      <Link to="/product" className="text-danger">
+                                        Products
+                                      </Link>
+                                      <button
+                                          className="btn btn-primary"
+                                          type="submit"
+                                          disabled={isSubmitting}
+                                      >
+                                        {isSubmitting ? "Saving..." : "Save"}
+                                      </button>
+                                    </div>
+                                  </form>
+                              )}
+                            </Formik>
                           </div>
                         </div>
                       </div>

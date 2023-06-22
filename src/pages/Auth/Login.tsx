@@ -1,16 +1,16 @@
-import React, {useState} from 'react';
-import {UserData} from "../../services/baseData";
+import React, { useState } from 'react';
+import { UserData } from "../../services/baseData";
 import * as Yup from "yup";
-import {Field, Form, Formik, FormikHelpers} from "formik";
-import {Link, Navigate} from "react-router-dom";
-import axios from "axios";
+import { Field, Form, Formik, FormikHelpers } from "formik";
+import { Link, Navigate } from "react-router-dom";
+import { UserLogin } from "../../services/Auth.services";
 
 const Login = () => {
     const [isRedirect, setIsRedirect] = useState(false);
-    const initialValue : UserData = {
+    const initialValue: UserData = {
         username: '',
         password: ''
-    }
+    };
 
     const SignupValidation = Yup.object().shape({
         username: Yup.string()
@@ -21,16 +21,16 @@ const Login = () => {
 
     const onSubmit = async (values: UserData, helpers: FormikHelpers<UserData>) => {
         const { username, password } = values;
-        await axios.post(`/login`, { username, password },{withCredentials: true}).then(
-            response => {
-                console.log(response)
-                return response
-            }).catch(err =>{
-                console.log(err)
-            return err
-        })
+        try {
+            const response = await UserLogin({ username, password });
+            console.log(response);
+            setIsRedirect(true);
+        } catch (error) {
+            console.log(error);
+        }
     };
-    if(isRedirect) return (<> <Navigate replace to={'/'}/> </>);
+
+    if (isRedirect) return (<><Navigate replace to={'/'} /></>);
     return (
         <div>
             <div className="container"  >

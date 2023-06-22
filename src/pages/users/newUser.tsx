@@ -3,50 +3,48 @@ import { Link, Navigate } from "react-router-dom";
 import { Field, Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import Wrapper from "../../components/Wrapper";
-import {UserData} from "../../services/baseData";
+import {ProductData, UserData} from "../../services/baseData";
+import useUser from "../../Api/useUser";
 
-
-/**
- * Component for creating a new user.
- */
 const NewUser = () => {
     const [isRedirect, setIsRedirect] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
 
-    const initialValue: UserData = {
+    const { createUser } = useUser();
+
+    const initialValues: UserData = {
         username: "",
         email: "",
         password: "",
     };
 
-    const UserValidation = Yup.object().shape({
+    const userValidationSchema = Yup.object().shape({
         username: Yup.string()
             .min(2, "Too Short!")
             .max(50, "Too Long!")
             .required("Required"),
         email: Yup.string().email("Invalid email").required("Required"),
-        password: Yup.string().required("Required"),
+        password: Yup.string().required("Required")
     });
 
-    /**
-     * Handles the form submission.
-     *
-     * @param values - Form field values.
-     * @param helpers - Formik helpers.
-     */
-    const onSubmit = (
+    const onSubmit = async (
         values: UserData,
-        helpers: FormikHelpers<UserData>
+        { setSubmitting, resetForm }: FormikHelpers<UserData>
     ) => {
-
-        setIsRedirect(true);
+        setIsSaving(true);
+        try {
+            await createUser(values);
+            setIsRedirect(true);
+        } catch (error) {
+            console.error("Failed to create user", error);
+        } finally {
+            setIsSaving(false);
+            setSubmitting(false);
+        }
     };
 
     if (isRedirect) {
-        return (
-            <>
-                <Navigate replace to={"/users"} />
-            </>
-        );
+        return <Navigate replace to="/users" />;
     }
 
     return (
@@ -63,83 +61,82 @@ const NewUser = () => {
                     <div className="col-12">
                         <div className="card">
                             <div className="card-body">
-                                <div>
-                                    <div className="container">
-                                        <div className="row justify-content-center text-center">
-                                            <div className="col-md-10">
-                                                <div className="card bg-light mt-5">
-                                                    <h2 className="card-title text-center font-weight-bold h1">
-                                                        Add a New User
-                                                    </h2>
-                                                    <div className="card-body py-md-4">
-                                                        <Formik
-                                                            onSubmit={onSubmit}
-                                                            initialValues={initialValue}
-                                                            validationSchema={UserValidation}
-                                                        >
-                                                            {({ errors, touched }) => (
-                                                                <>
-                                                                    <div className="row">
-                                                                        <div className="form-group col">
-                                                                            <label htmlFor="name">Name</label>
-                                                                            <Field
-                                                                                id="name"
-                                                                                className="form-control rounded"
-                                                                                name="username"
-                                                                                placeholder="Enter Name"
-                                                                            />
-                                                                            {errors.username && touched.username && (
-                                                                                <div className="text-danger">
-                                                                                    {errors.username}
-                                                                                </div>
-                                                                            )}
-                                                                        </div>
-                                                                        <div className="form-group col">
-                                                                            <label htmlFor="email">Email</label>
-                                                                            <Field
-                                                                                id="email"
-                                                                                type="email"
-                                                                                className="form-control rounded"
-                                                                                name="email"
-                                                                                placeholder="Enter Email"
-                                                                            />
-                                                                            {errors.email && touched.email && (
-                                                                                <div className="text-danger">
-                                                                                    {errors.email}
-                                                                                </div>
-                                                                            )}
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className="form-group">
-                                                                        <label htmlFor="password">Password</label>
+                                <div className="container">
+                                    <div className="row justify-content-center text-center">
+                                        <div className="col-md-10">
+                                            <div className="card bg-light mt-5">
+                                                <h2 className="card-title text-center font-weight-bold h1">
+                                                    Add a New User
+                                                </h2>
+                                                <div className="card-body py-md-4">
+                                                    <Formik
+                                                        initialValues={initialValues}
+                                                        validationSchema={userValidationSchema}
+                                                        onSubmit={onSubmit}
+                                                    >
+                                                        {({ errors, touched, isSubmitting, handleSubmit }) => (
+                                                            <form onSubmit={handleSubmit}>
+                                                                <div className="row">
+                                                                    <div className="form-group col">
+                                                                        <label htmlFor="name">Name</label>
                                                                         <Field
-                                                                            id="password"
-                                                                            type="password"
+                                                                            id="name"
                                                                             className="form-control rounded"
-                                                                            name="password"
-                                                                            placeholder="Enter Password"
+                                                                            name="username"
+                                                                            placeholder="Enter Name"
                                                                         />
-                                                                        {errors.password && touched.password && (
+                                                                        {errors.username && touched.username && (
                                                                             <div className="text-danger">
-                                                                                {errors.password}
+                                                                                {errors.username}
                                                                             </div>
                                                                         )}
                                                                     </div>
-                                                                    <div className="d-flex flex-row align-items-center justify-content-between">
-                                                                        <Link to={"/user"} className="text-danger">
-                                                                            Users
-                                                                        </Link>
-                                                                        <button
-                                                                            className="btn btn-primary"
-                                                                            type="submit"
-                                                                        >
-                                                                            Save
-                                                                        </button>
+                                                                    <div className="form-group col">
+                                                                        <label htmlFor="email">Email</label>
+                                                                        <Field
+                                                                            id="email"
+                                                                            type="email"
+                                                                            className="form-control rounded"
+                                                                            name="email"
+                                                                            placeholder="Enter Email"
+                                                                        />
+                                                                        {errors.email && touched.email && (
+                                                                            <div className="text-danger">
+                                                                                {errors.email}
+                                                                            </div>
+                                                                        )}
                                                                     </div>
-                                                                </>
-                                                            )}
-                                                        </Formik>
-                                                    </div>
+                                                                </div>
+                                                                <div className="form-group">
+                                                                    <label htmlFor="password">Password</label>
+                                                                    <Field
+                                                                        id="password"
+                                                                        type="password"
+                                                                        className="form-control rounded"
+                                                                        name="password"
+                                                                        placeholder="Enter Password"
+                                                                    />
+                                                                    {errors.password && touched.password && (
+                                                                        <div className="text-danger">
+                                                                            {errors.password}
+                                                                        </div>
+                                                                    )}
+                                                                </div>
+                                                                <div className="d-flex flex-row align-items-center justify-content-between">
+                                                                    <Link to="/user" className="text-danger">
+                                                                        Users
+                                                                    </Link>
+                                                                    <button
+                                                                        className="btn btn-primary"
+                                                                        type="submit"
+                                                                        disabled={isSubmitting || isSaving}
+                                                                    >
+                                                                        {isSaving ? "Saving..." : "Save"}
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        )}
+                                                    </Formik>
                                                 </div>
                                             </div>
                                         </div>

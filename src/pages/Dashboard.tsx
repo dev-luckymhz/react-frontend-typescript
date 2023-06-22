@@ -4,6 +4,38 @@ import Wrapper from "../components/Wrapper";
 import { Link } from "react-router-dom";
 
 const Dashboard = () => {
+  const cardData = [
+    {
+      icon: "bx bxl-mailchimp",
+      company: "Mailchimp",
+      daysAgo: "1 days ago",
+      badge: "Design",
+      heading: "Senior Product Designer-Singapore",
+      progressWidth: "50%",
+      applied: "32",
+      capacity: "50",
+    },
+    {
+      icon: "bx bxl-dribbble",
+      company: "Dribbble",
+      daysAgo: "4 days ago",
+      badge: "Product",
+      heading: "Junior Product Designer-Singapore",
+      progressWidth: "50%",
+      applied: "42",
+      capacity: "70",
+    },
+    {
+      icon: "bx bxl-reddit",
+      company: "Reddit",
+      daysAgo: "2 days ago",
+      badge: "Design",
+      heading: "Software Architect Java - USA",
+      progressWidth: "50%",
+      applied: "52",
+      capacity: "100",
+    },
+  ];
   return (
     <Wrapper>
       <nav aria-label="breadcrumb" className="mx-3">
@@ -16,138 +48,47 @@ const Dashboard = () => {
 
       <div className="container">
         <div className="row">
-          <div className="col-lg-4">
-            <div className="card card-margin">
-              <div className="card-header no-border">
-                <h5 className="card-title">MOM</h5>
-              </div>
-              <div className="card-body pt-0">
-                <div className="widget-49">
-                  <div className="widget-49-title-wrapper">
-                    <div className="widget-49-date-primary">
-                      <span className="widget-49-date-day">09</span>
-                      <span className="widget-49-date-month">apr</span>
+          {cardData.map((card, index) => (
+              <div className="col-md-4" key={index}>
+                <div className="card p-3 mb-2">
+                  <div className="d-flex justify-content-between">
+                    <div className="d-flex flex-row align-items-center">
+                      <div className="icon">
+                        <i className={card.icon}></i>
+                      </div>
+                      <div className="ms-2 c-details">
+                        <h6 className="mb-0">{card.company}</h6>
+                        <span>{card.daysAgo}</span>
+                      </div>
                     </div>
-                    <div className="widget-49-meeting-info">
-                      <span className="widget-49-pro-title">
-                        PRO-08235 DeskOpe. Website
-                      </span>
-                      <span className="widget-49-meeting-time">
-                        12:00 to 13.30 Hrs
-                      </span>
+                    <div className="badge">
+                      <span>{card.badge}</span>
                     </div>
                   </div>
-                  <ol className="widget-49-meeting-points">
-                    <li className="widget-49-meeting-item">
-                      <span>Expand module is removed</span>
-                    </li>
-                    <li className="widget-49-meeting-item">
-                      <span>Data migration is in scope</span>
-                    </li>
-                    <li className="widget-49-meeting-item">
-                      <span>Session timeout increase to 30 minutes</span>
-                    </li>
-                  </ol>
-                  <div className="widget-49-meeting-action">
-                    <Link
-                      to="#"
-                      className="btn btn-sm btn-flash-border-primary"
-                    >
-                      View All
-                    </Link>
+                  <div className="mt-5">
+                    <h3 className="heading">{card.heading}</h3>
+                    <div className="mt-5">
+                      <div className="progress">
+                        <div
+                            className="progress-bar"
+                            role="progressbar"
+                            style={{ width: card.progressWidth }}
+                            aria-valuenow={parseInt(card.progressWidth)}
+                            aria-valuemin={0}
+                            aria-valuemax={100}
+                        ></div>
+                      </div>
+                      <div className="mt-3">
+                    <span className="text1">
+                      {card.applied} Applied{" "}
+                      <span className="text2">of {card.capacity} capacity</span>
+                    </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div className="col-lg-4">
-            <div className="card card-margin">
-              <div className="card-header no-border">
-                <h5 className="card-title">MOM</h5>
-              </div>
-              <div className="card-body pt-0">
-                <div className="widget-49">
-                  <div className="widget-49-title-wrapper">
-                    <div className="widget-49-date-warning">
-                      <span className="widget-49-date-day">13</span>
-                      <span className="widget-49-date-month">apr</span>
-                    </div>
-                    <div className="widget-49-meeting-info">
-                      <span className="widget-49-pro-title">
-                        PRO-08235 Lexa Corp.
-                      </span>
-                      <span className="widget-49-meeting-time">
-                        12:00 to 13.30 Hrs
-                      </span>
-                    </div>
-                  </div>
-                  <ol className="widget-49-meeting-points">
-                    <li className="widget-49-meeting-item">
-                      <span>Scheming module is removed</span>
-                    </li>
-                    <li className="widget-49-meeting-item">
-                      <span>App design contract confirmed</span>
-                    </li>
-                    <li className="widget-49-meeting-item">
-                      <span>Client request to send invoice</span>
-                    </li>
-                  </ol>
-                  <div className="widget-49-meeting-action">
-                    <Link
-                      to="#"
-                      className="btn btn-sm btn-flash-border-warning"
-                    >
-                      View All
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-4">
-            <div className="card card-margin">
-              <div className="card-header no-border">
-                <h5 className="card-title">MOM</h5>
-              </div>
-              <div className="card-body pt-0">
-                <div className="widget-49">
-                  <div className="widget-49-title-wrapper">
-                    <div className="widget-49-date-success">
-                      <span className="widget-49-date-day">22</span>
-                      <span className="widget-49-date-month">apr</span>
-                    </div>
-                    <div className="widget-49-meeting-info">
-                      <span className="widget-49-pro-title">
-                        PRO-027865 Opera module
-                      </span>
-                      <span className="widget-49-meeting-time">
-                        12:00 to 13.30 Hrs
-                      </span>
-                    </div>
-                  </div>
-                  <ol className="widget-49-meeting-points">
-                    <li className="widget-49-meeting-item">
-                      <span>Scope is revised and updated</span>
-                    </li>
-                    <li className="widget-49-meeting-item">
-                      <span>Time-line has been changed</span>
-                    </li>
-                    <li className="widget-49-meeting-item">
-                      <span>Received approval to start wire-frame</span>
-                    </li>
-                  </ol>
-                  <div className="widget-49-meeting-action">
-                    <Link
-                      to="#"
-                      className="btn btn-sm btn-flash-border-success"
-                    >
-                      View All
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </Wrapper>
