@@ -1,4 +1,4 @@
-import axios, {AxiosError} from "axios/index";
+import axios, {AxiosError} from "axios";
 
 /**
  * Handles the Axios error by logging the error details.

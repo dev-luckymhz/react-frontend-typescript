@@ -1,5 +1,3 @@
-import axios from "axios";
-
 /**
  * Interface for user data.
  */
