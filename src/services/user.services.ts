@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { UserData, BaseUrl } from './baseData';
+import {handleAxiosError} from "./errorHanddling.services";
 
 const UserBaseUrl = `${BaseUrl}/users`;
 
@@ -10,12 +11,13 @@ const UserBaseUrl = `${BaseUrl}/users`;
  * @returns A promise that resolves to the Axios response.
  * @throws An error if the request fails or an error occurs.
  */
-export const RegisterUser = async (data: UserData): Promise<AxiosResponse  | undefined> => {
+export const RegisterUser = async (data: UserData): Promise<AxiosResponse> => {
     try {
         const response = await axios.post(UserBaseUrl, data, { withCredentials: true });
         return response;
     } catch (error) {
-        return handleAxiosError(error as AxiosError);
+        handleAxiosError(error as AxiosError);
+        throw error;
     }
 };
 
@@ -26,7 +28,7 @@ export const RegisterUser = async (data: UserData): Promise<AxiosResponse  | und
  * @returns A promise that resolves to the Axios response.
  * @throws An error if the request fails or an error occurs.
  */
-export const UpdateUser = async (data: UserData): Promise<AxiosResponse  | undefined> => {
+export const UpdateUser = async (data: UserData): Promise<AxiosResponse> => {
     const userId = data.id;
     const url = `${UserBaseUrl}/${userId}`;
 
@@ -34,7 +36,8 @@ export const UpdateUser = async (data: UserData): Promise<AxiosResponse  | undef
         const response = await axios.put(url, data, { withCredentials: true });
         return response;
     } catch (error) {
-        return handleAxiosError(error as AxiosError);
+        handleAxiosError(error as AxiosError);
+        throw error;
     }
 };
 
@@ -45,7 +48,7 @@ export const UpdateUser = async (data: UserData): Promise<AxiosResponse  | undef
  * @returns A promise that resolves to the Axios response.
  * @throws An error if the request fails or an error occurs.
  */
-export const DeleteUser = async (data: UserData): Promise<AxiosResponse  | undefined> => {
+export const DeleteUser = async (data: UserData): Promise<AxiosResponse> => {
     const userId = data.id;
     const url = `${UserBaseUrl}/${userId}`;
 
@@ -53,7 +56,8 @@ export const DeleteUser = async (data: UserData): Promise<AxiosResponse  | undef
         const response = await axios.delete(url, { withCredentials: true });
         return response;
     } catch (error) {
-        return handleAxiosError(error as AxiosError);
+        handleAxiosError(error as AxiosError);
+        throw error;
     }
 };
 
@@ -63,12 +67,13 @@ export const DeleteUser = async (data: UserData): Promise<AxiosResponse  | undef
  * @returns A promise that resolves to the Axios response.
  * @throws An error if the request fails or an error occurs.
  */
-export const GetUsers = async (): Promise<AxiosResponse  | undefined> => {
+export const GetUsers = async (): Promise<AxiosResponse> => {
     try {
         const response = await axios.get(UserBaseUrl, { withCredentials: true });
         return response;
     } catch (error) {
-        return handleAxiosError(error as AxiosError);
+        handleAxiosError(error as AxiosError);
+        throw error;
     }
 };
 
@@ -79,31 +84,15 @@ export const GetUsers = async (): Promise<AxiosResponse  | undefined> => {
  * @returns A promise that resolves to the Axios response.
  * @throws An error if the request fails or an error occurs.
  */
-export const GetOneUser = async (id: number): Promise<AxiosResponse  | undefined> => {
+export const GetOneUser = async (id: number): Promise<AxiosResponse> => {
     const url = `${UserBaseUrl}/${id}`;
 
     try {
         const response = await axios.get(url, { withCredentials: true });
         return response;
     } catch (error) {
-        return handleAxiosError(error as AxiosError);
+        handleAxiosError(error as AxiosError);
+        throw error;
     }
 };
 
-/**
- * Handles the Axios error by throwing a formatted error.
- *
- * @param error - The Axios error.
- * @throws The formatted error.
- */
-const handleAxiosError = (error: AxiosError): undefined => {
-    if (error.response) {
-        const { status, data } = error.response;
-        console.error(`Request failed with status: ${status}\nResponse data: ${JSON.stringify(data)}`);
-    } else if (error.request) {
-        console.error(`No response received: ${error.request}`);
-    } else {
-        console.error(`Error during request setup: ${error.message}`);
-    }
-    return undefined;
-};
