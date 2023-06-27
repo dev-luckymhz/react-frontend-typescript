@@ -1,5 +1,7 @@
 # React Application
 
+<img src="./screenshot/login.png"/>
+
 This is a React application built with the following features:
 
 - Dashboard: A dashboard page that serves as the main entry point of the application.
