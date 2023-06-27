@@ -45,9 +45,23 @@ This is a React application built with the following features:
 
 To run this application locally, follow these steps:
 
-1. Clone the repository: `git clone <repository-url>`
-2. Navigate to the project directory: `cd <project-directory>`
-3. Install the dependencies: `npm install`
+1. Clone the repository:
+
+```bash
+git clone https://github.com/Zo-ambinintsoa/currency-portfolio-backend.git
+```
+
+2. Navigate to the project directory:
+
+``` shell
+ cd currency-portfolio-backend
+  ```
+
+3. Install the package:
+
+``` shell
+ npm install
+  ```
 
 ## Usage
 
