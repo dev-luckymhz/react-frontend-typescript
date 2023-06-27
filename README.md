@@ -25,6 +25,11 @@ To start the development server and run the application, use the following comma
 ```shell
 npm start
 ```
+# Custom Hooks
+This application includes the following custom hooks:
+
+- `UseUser:` A custom hook for managing user-related data.
+- `UseProduct:` A custom hook for managing product-related data.
 
 # Dependencies
 
