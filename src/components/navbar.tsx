@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useUser from "../Api/useUser";
-import {getUser} from "../services/Auth.services";
+import { getUser } from "../services/Auth.services";
 
 const Navbar = () => {
     const { user, fetchUser } = useUser();
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -16,10 +17,12 @@ const Navbar = () => {
             } catch (error) {
                 setError(error as Error);
                 setIsLoading(false);
+                navigate("/login"); // Redirect to "/login" on error
             }
         };
+
         fetchData();
-    }, [fetchUser]);
+    }, [fetchUser, navigate]);
 
     return (
         <header className="topbar" data-navbarbg="skin6">

@@ -20,14 +20,10 @@ const NewProduct = () => {
     image: "",
     price: 0,
   };
-
   const validationSchema = Yup.object({
     title: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
-    image: Yup.mixed<FileList>()
-        .test("fileSize", "Only documents up to 2MB are permitted.", (files) => {
-          if (!files || files.length === 0) return true;
-          return Array.from(files).every((file) => file.size <= 2000000);
-        }),
+    image: Yup.mixed<File>()
+        .nullable(),
     price: Yup.number().required("Price Required"),
   });
 
@@ -121,7 +117,7 @@ const NewProduct = () => {
                                             className="form-control rounded"
                                             type="file"
                                             name="image"
-                                            accept="image/png, image/jpeg"
+                                            accept="image/*"
                                         />
                                         {errors.image && touched.image && (
                                             <div className="text-danger">{errors.image}</div>

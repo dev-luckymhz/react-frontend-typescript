@@ -38,7 +38,7 @@ export default function useProduct() {
     const fetchAllProducts = async () => {
         try {
             const response = await GetProducts();
-            setProducts(response.data);
+            setProducts(response.data.data);
         } catch (error) {
             throw error;
         }
