@@ -9,7 +9,17 @@
 
 # React Application
 
-## ScreenShoot
+This is a React application built with the following features:
+
+- Dashboard: A dashboard page that serves as the main entry point of the application.
+- Users: A page to manage users.
+- Product: A page to display product information.
+- NewProduct: A page to create a new product or edit an existing one.
+- NewUser: A page to create a new user.
+- Register: A page for user registration.
+- Login: A page for user login.
+
+  ## ScreenShoot
 
 - `Authentification`
 
@@ -30,16 +40,6 @@
 <p align="center">
 <img src="./screenshot/product.png" alt="Alt Text" width="400" height="200" align="center"/>
 </p>
-
-This is a React application built with the following features:
-
-- Dashboard: A dashboard page that serves as the main entry point of the application.
-- Users: A page to manage users.
-- Product: A page to display product information.
-- NewProduct: A page to create a new product or edit an existing one.
-- NewUser: A page to create a new user.
-- Register: A page for user registration.
-- Login: A page for user login.
 
 ## Installation
 
