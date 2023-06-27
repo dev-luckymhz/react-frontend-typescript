@@ -54,7 +54,7 @@ git clone https://github.com/Zo-ambinintsoa/react-frontend-typescript.git
 2. Navigate to the project directory:
 
 ``` shell
- cd currency-portfolio-backend
+ cd react-frontend-typescript
   ```
 
 3. Install the package:
